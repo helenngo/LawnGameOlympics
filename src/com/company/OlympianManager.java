@@ -35,7 +35,6 @@ public class OlympianManager {
         addOlympians("Dylan Homes",Sex.MALE, 20);
 
     }
-    System.out.println("\n");
 
     public void addOlympians(String name, Sex sex, int age) {
         Olympian olympianObject = new Olympian();
