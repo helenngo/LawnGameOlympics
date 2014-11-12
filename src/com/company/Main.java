@@ -41,10 +41,9 @@ public class Main {
     public static void getOlympians() {
         System.out.println("The olympians are:\n");
         OlympianManager OlympianManager = new OlympianManager();
-        for (int i = 0; i < OlympianManager.Olympians.length; i++) {
-            System.out.println(OlympianManager.Olympians[i].getName());
-            System.out.println(OlympianManager.Olympians[i].getSex());
-            System.out.println(OlympianManager.Olympians[i].getAge());
+        for (int i = 0; i < OlympianManager.list.size(); i++) {
+            Olympian person = OlympianManager.list.get(i);
+            System.out.println(person.getName() + ", " + person.getSex() + ", " + person.getAge() + "\n");
         }
         System.out.println("\n");
     }

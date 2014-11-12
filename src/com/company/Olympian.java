@@ -9,6 +9,12 @@ public class Olympian {
     private Sex sex;
     private int age;
 
+    public Olympian (String name, Sex sex, int age){
+        this.name = name;
+        this.sex = sex;
+        this.age = age;
+    }
+
     public void setName(String name){
         this.name = name;
     }
