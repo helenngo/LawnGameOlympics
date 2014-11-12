@@ -1,100 +1,84 @@
 package com.company;
 
-import java.util.Scanner;
-
 public class Main {
+    //Declaring the eventArray and olympiansArray as class variables.
+    public static String[] eventArray;
+    public static String[][] olympiansArray;
 
+    //A method to create and initialize the events array, olympian matrix and help screen.
     public static void main(String[] args) {
+        System.out.println("Lawn Game Olympics");//The title of the application.
+        System.out.println("Enter e for events, o for olympians and h for more help.");//A bit of instructions.
+        System.out.println("\n");//Create space between displayed methods.
 
-        System.out.println("Lawn Game Olympics");
-        System.out.println("Press e for events, o for olympians and h for more help.");
-
-        Scanner myScanner = new Scanner(System.in);
-        String myString = myScanner.next();
-
-        if (myString.equals("e") || myString.equals("events")) {
-            eventMethod();
-        } else if (myString.equals("o") || myString.equals("olympians")) {
-            olympiansMethod();
-        } else if (myString.equals("h") || myString.equals("help")) {
-            System.out.println("Help Menu:");
-        } else {
-            System.out.println("You need to learn how to spell.");
-        }
-    }
-
-    public static void eventMethod() {
-        System.out.println("The events are:");
-        String[] eventArray;
-        eventArray = new String[6];
-        eventArray[0] = "Washoos";
-        eventArray[1] = "CanJam";
-        eventArray[2] = "Horseshoes";
-        eventArray[3] = "Cornhole";
-        eventArray[4] = "Ladderball";
-        eventArray[5] = "Stickgame";
-        for (int i = 0; i < eventArray.length; i++) {
-            System.out.println(eventArray[i]);
-        }
-    }
-
-    public static void olympiansMethod() {
-        System.out.println("The olympians are:");
-        String[][] olympiansArray;
-        olympiansArray = new String[16][3];
-        olympiansArray[0][0] = "Cat";
-        olympiansArray[0][1] = "F";
-        olympiansArray[0][2] = "13";
-        olympiansArray[1][0] = "Jimmy";
-        olympiansArray[1][1] = "F";
-        olympiansArray[1][2] = "13";
-        olympiansArray[2][0] = "Bobby";
-        olympiansArray[2][1] = "F";
-        olympiansArray[2][2] = "13";
-        olympiansArray[3][0] = "Sandra";
-        olympiansArray[3][1] = "F";
-        olympiansArray[3][2] = "13";
-        olympiansArray[4][0] = "Nicky";
-        olympiansArray[4][1] = "F";
-        olympiansArray[4][2] = "13";
-        olympiansArray[5][0] = "Luke";
-        olympiansArray[5][1] = "F";
-        olympiansArray[5][2] = "13";
-        olympiansArray[6][0] = "Tudor";
-        olympiansArray[6][1] = "F";
-        olympiansArray[6][2] = "13";
-        olympiansArray[7][0] = "Mary";
-        olympiansArray[7][1] = "F";
-        olympiansArray[7][2] = "13";
-        olympiansArray[8][0] = "Henry";
-        olympiansArray[8][1] = "F";
-        olympiansArray[8][2] = "13";
-        olympiansArray[9][0] = "Kathrine";
-        olympiansArray[9][1] = "F";
-        olympiansArray[9][2] = "13";
-        olympiansArray[10][0] = "Elizabeth";
-        olympiansArray[10][1] = "F";
-        olympiansArray[10][2] = "13";
-        olympiansArray[11][0] = "George";
-        olympiansArray[11][1] = "F";
-        olympiansArray[11][2] = "13";
-        olympiansArray[12][0] = "Zeus";
-        olympiansArray[12][1] = "F";
-        olympiansArray[12][2] = "13";
-        olympiansArray[13][0] = "Hades";
-        olympiansArray[13][1] = "F";
-        olympiansArray[13][2] = "13";
-        olympiansArray[14][0] = "Athena";
-        olympiansArray[14][1] = "F";
-        olympiansArray[14][2] = "13";
-        olympiansArray[15][0] = "James";
-        olympiansArray[15][1] = "F";
-        olympiansArray[15][2] = "13";
-        for (int i = 0; i < olympiansArray.length; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(olympiansArray[i][j]);
+        //The for loop goes through the user input and creates an array.
+        for (int i=0; i < args.length; i++)
+        //Comparing the user inputs to application arguments.
+        {
+            if (args[i].equals("e") || args[i].equals("events")) {
+                eventMethod();
+            } else if (args[i].equals("o") || args[i].equals("olympians")) {
+                olympiansMethod();
+            } else if (args[i].equals("h") || args[i].equals("help")) {
+                helpMethod();
+            } else {
+                System.out.println("You need to learn how to type.");
             }
         }
     }
-}
 
+    //A method to display the day's events.
+    public static void eventMethod() {
+        System.out.println("The events are:");
+        //An array to hold the event names.
+        eventArray = new String[]
+                {"Washoos", "CanJam", "Horseshoes", "Cornhole", "Ladderball", "Stickgame",};
+        for (int i = 0; i < eventArray.length; i++) {
+            System.out.println(eventArray[i]);
+        }
+        System.out.println("\n");
+    }
+
+    //A method to display the day's olympians.
+    public static void olympiansMethod() {
+        System.out.println("The olympians are:\n");
+        //A matrix for holding the olympians.
+        olympiansArray = new String[][]
+                {
+                        {"Jay Pritchett", "F", "66"},
+                        {"Gloria Pritchett", "M", "42"},
+                        {"Joe Pritchett","M","1"},
+                        {"Manny Delgado", "F", "15"},
+                        {"Stella","F","1"},
+                        {"Javier Delgado","M","50"},
+                        {"Mitchell Pritchett","M","38"},
+                        {"Lily Tucker-Pritchet","F",""},
+                        {"Cameron Tuker","M","42"},
+                        {"Larry","M","1"},
+                        {"Claire Dunphy","F","39"},
+                        {"Haley Dunphy","F","19"},
+                        {"Alex Dunphy","F","17"},
+                        {"Luke Dunphy","M","15"},
+                        {"Phil Dunphy","M","47"},
+                        {"Grace Dunphy","F","75"},
+                        {"Frank Dunphy", "M", "75"},
+                        {"DeDe Pritchett","F","63"},
+                        {"Merle Tuker","M","73"},
+                        {"Barb Tuker","F","64"},
+                        {"Dylan Homes","M","20"}
+                };
+        for (int i = 0; i < olympiansArray.length; i++) {
+            System.out.println(olympiansArray[i][0] + ", " + olympiansArray[i][1] + ", " + olympiansArray[i][2] + "\n");
+        }
+        System.out.println("\n");
+    }
+
+    //A method to display the help screen.
+    public static void helpMethod() {
+        System.out.println("Help Menu:");//The help screen.
+        System.out.println("If you want to view the events for day, \n enter the letter e or the word event.");
+        System.out.println("If you want to view the list of olympians participating today,  \n enter the letter o or the word olympian.");
+        System.out.println("And if you still don't know what to do, I'm sorry, \n but I can't help you anymore.");
+        System.out.println("\n");
+    }
+}
