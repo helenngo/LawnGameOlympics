@@ -1,59 +1,93 @@
-package com.company;
+    package com.company;
 
-public class Main {
+    import java.io.BufferedReader;
+    import java.io.InputStreamReader;
+    import java.io.IOException;
 
-    //A method to create and initialize the events array, olympian matrix and help screen.
-    public static void main(String[] args) {
-        System.out.println("Lawn Game Olympics");//The title of the application.
-        System.out.println("Enter e for events, o for olympians and h for more help.");//A bit of instructions.
-        System.out.println("\n");//Create space between displayed methods.
+    public class Main {
 
-        //The for loop goes through the user input and creates an array.
-        for (int i=0; i < args.length; i++)
-        //Comparing the user inputs to application arguments.
-        {
-            if (args[i].equals("e") || args[i].equals("events")) {
-                eventMethod();
-            } else if (args[i].equals("o") || args[i].equals("olympians")) {
-                getOlympians();
-            } else if (args[i].equals("h") || args[i].equals("help")) {
-                helpMethod();
-            } else {
-                System.out.println("You need to learn how to type.");
+        //A method to create and initialize the events array, olympian matrix and help screen.
+        public static void main(String[] args) {
+
+            System.out.println("Lawn Game Olympics");//The title of the application.
+            System.out.println("Press enter once, then input");//A bit of instructions.
+            System.out.println("\t e for today's events");//A bit of instructions
+            System.out.println("\t o for the competing olympians");//A bit of instructions
+            System.out.println("\t t for the teams, and");//A bit of instructions
+            System.out.println("\t h for additional help.");//A bit of instructions
+
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                String userInput = br.readLine(); //returns user input as string
+
+                while ((userInput = br.readLine()) != null) {
+                    if (userInput.equals("e") || userInput.equals("events")) {
+                        eventMethod();
+                    } else if (userInput.equals("o") || userInput.equals("olympians")) {
+                        getOlympian();
+                    } else if (userInput.equals("h") || userInput.equals("help")) {
+                        helpMethod();
+                    }else if (userInput.equals("t") || userInput.equals("teams")) {
+                        getTeams();
+                    }else if(userInput.equals("q") || userInput.equals("quit")){
+                        System.out.println("Bye.");
+                        System.exit(0);
+                    } else {
+                        System.out.println("Your input could not be understood.");
+                        System.out.println("Please refer to the start screen or enter the" +
+                                "\nletter h then press enter for additional help.");
+                    }
+                }
+
+            } catch (IOException ioe) {
+                System.out.println("Problem reading from file");
             }
         }
-    }
 
-    //A method to display the day's events.
-    public static void eventMethod() {
-        System.out.println("The events are:");
-        EventManager EventManager = new EventManager();
-        for (int i = 0; i < EventManager.eventsArray.length; i++) {
-            System.out.println(EventManager.eventsArray[i].getName());
-            System.out.println(EventManager.eventsArray[i].getPlayTo());
-            System.out.println(EventManager.eventsArray[i].getIsPlaytoExact());
-            System.out.println(EventManager.eventsArray[i].getPlayDistance());
+        //A method to display the day's events.
+        public static void eventMethod() {
+            System.out.println("The events are:");
+            EventManager EventManager = new EventManager();
+            for (int i = 0; i < EventManager.eventsArray.length; i++) {
+                System.out.println(EventManager.eventsArray[i].getName());
+                System.out.println(EventManager.eventsArray[i].getPlayTo());
+                System.out.println(EventManager.eventsArray[i].getIsPlaytoExact());
+                System.out.println(EventManager.eventsArray[i].getPlayDistance());
+            }
+            System.out.println("\n");
         }
-        System.out.println("\n");
-    }
 
-    //A method to display the day's olympians.
-    public static void getOlympians() {
-        System.out.println("The olympians are:\n");
-        OlympianManager OlympianManager = new OlympianManager();
-        for (int i = 0; i < OlympianManager.list.size(); i++) {
-            Olympian person = OlympianManager.list.get(i);
-            System.out.println(person.getName() + ", " + person.getSex() + ", " + person.getAge() + "\n");
+        //A method to display the day's olympians.
+        public static void getOlympian() {
+            System.out.println("The olympians are:\n");
+            OlympianManager OlympianManager = new OlympianManager();
+            for (int i = 0; i < OlympianManager.list.size(); i++) {
+                Olympian person = OlympianManager.list.get(i);
+                System.out.println(person.getName() + ", " + person.getSex() + ", " + person.getAge() + "\n");
+            }
+            System.out.println("\n");
         }
-        System.out.println("\n");
-    }
 
-    //A method to display the help screen.
-    public static void helpMethod() {
-        System.out.println("Help Menu:");//The help screen.
-        System.out.println("If you want to view the events for day, \n enter the letter e or the word event.");
-        System.out.println("If you want to view the list of olympians participating today,  \n enter the letter o or the word olympian.");
-        System.out.println("And if you still don't know what to do, I'm sorry, \n but I can't help you anymore.");
-        System.out.println("\n");
+        public static void getTeams() {
+            System.out.println("The teams are:\n");
+            TeamManager TeamManager = new TeamManager();
+            for (int i = 0; i < TeamManager.teams.length(); i++) {
+                Team person = TeamManager.teams[i];
+                System.out.println(person.getOlympian1() + ", " + person.getOlympian2() + ", " + person.getLosses() + "," +
+                        person.getWins()+"\n");
+            }
+            System.out.println("\n");
+        }
+
+        //A method to display the help screen.
+        public static void helpMethod() {
+            System.out.println("Help Menu:");//The help screen.
+            System.out.println("Refer to the start screen for input options, or" +
+                    "\nyou may input the word. Once you've have input" +
+                    "\nthe your desired option, press the enter key."+
+                    "\nPlease keep in mind that everything is lowercase.\n");
+            System.out.println("And if you still don't know what to do," +
+                    "\nI'm sorry but I can't help you anymore.");
+            System.out.println("\n");
+        }
     }
-}

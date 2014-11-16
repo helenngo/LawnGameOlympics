@@ -9,17 +9,17 @@ import java.util.Random;
  */
 public class TeamManager {
 
-    List<Olympian> male;
-    List<Olympian>female;
-    Olympian[] shorter;
-    Olympian[] longer;
-    Olympian[] Roster;
-    Olympian[] randomRoster;
-    Random arbitrary = new Random();
-    int players = Roster.length;
-    int random = arbitrary.nextInt(players-1);
-    Olympian person = Roster[random];
-    Team[] teams;
+    private List<Olympian> male;
+    private List<Olympian>female;
+    private Olympian[] shorter;
+    private Olympian[] longer;
+    private Olympian[] Roster;
+    private Olympian[] randomRoster;
+    private Random arbitrary = new Random();
+    private int players = Roster.length;
+    private int random = arbitrary.nextInt(players-1);
+    private Olympian person = Roster[random];
+    public Team[] teams;
 
     public void TeamManager() {
 
@@ -65,17 +65,19 @@ public class TeamManager {
 
         teams = new Team[n/2];
         for (int i = 0; i < S;i++ ){
-            teams[i].getOlympian1() = Olympian(shorter[i].getName(),shorter[i].getSex(),shorter[i].getAge());
-            teams[i].getOlympian2() = Olympian(longer[i].getName(),longer[i].getSex(),longer[i].getAge());
-            teams[i].getWins() = omission;
-            teams[i].getLosses() = omission;
+            teams[i].setOlympian1(Olympian(shorter[i].getName(),shorter[i].getSex(),shorter[i].getAge()));
+            teams[i].setOlympian2(Olympian(longer[i].getName(),longer[i].getSex(),longer[i].getAge()));
+            teams[i].setWins(omission);
+            teams[i].setLosses(omission);
         }
         for (int i = S; i < n/2; i++){
             int other = i + n/2 - S;
-            teams[i].getOlympian1() = Olympian(longer[i].getName(),longer[i].getSex(),longer[i].getAge());
-            teams[i].getOlympian2() = Olympian(longer[other].getName(),longer[other].getSex(),longer[other].getAge());
-            teams[i].getWins() = omission;
-            teams[i].getLosses() = omission;
+            teams[i].setOlympian1(
+                    Olympian(longer[i].getName(),longer[i].getSex(),longer[i].getAge()));
+            teams[i].setOlympian2(
+                    Olympian(longer[other].getName(),longer[other].getSex(),longer[other].getAge()));
+            teams[i].setWins(omission);
+            teams[i].setLosses(omission);
         }
     }
 }
