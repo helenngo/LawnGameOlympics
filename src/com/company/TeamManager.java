@@ -14,35 +14,21 @@ public class TeamManager {
     private Olympian[] shorter;
     private Olympian[] longer;
     private Olympian[] Roster;
-    private Olympian[] randomRoster;
-    private Random arbitrary = new Random();
-    private int players = Roster.length;
-    private int random = arbitrary.nextInt(players-1);
-    private Olympian person = Roster[random];
     public Team[] teams;
 
-    public void TeamManager() {
+    public TeamManager() {
 
         OlympianManager OlympianManager = new OlympianManager();
         Roster = OlympianManager.list.toArray(new Olympian[OlympianManager.list.size()]);
-
-        for (int i = 0; i < players; i++ ){
-            random = arbitrary.nextInt(players-1);
-            while (person == null){
-                random = arbitrary.nextInt(players-1);
-            }
-            randomRoster[i]= new Olympian(person.getName(),person.getSex(),person.getAge());
-            person = null;
-        }
-
+        int players = Roster.length;
 
         male = new ArrayList<Olympian>();
         female = new ArrayList<Olympian>();
         for (int i = 0; i < players; i++) {
-            if (randomRoster[i].getSex() == Sex.MALE) {
-                male.add(randomRoster[i]);
+            if (Roster[i].getSex() == Sex.MALE) {
+                male.add(Roster[i]);
             } else {
-                female.add(randomRoster[i]);
+                female.add(Roster[i]);
             }
         }
 
@@ -65,19 +51,18 @@ public class TeamManager {
 
         teams = new Team[n/2];
         for (int i = 0; i < S;i++ ){
-            teams[i].setOlympian1(Olympian(shorter[i].getName(),shorter[i].getSex(),shorter[i].getAge()));
-            teams[i].setOlympian2(Olympian(longer[i].getName(),longer[i].getSex(),longer[i].getAge()));
-            teams[i].setWins(omission);
-            teams[i].setLosses(omission);
+
+            Olympian Olympian1 =  new Olympian(shorter[i].getName(),shorter[i].getSex(),shorter[i].getAge());
+            Olympian Olympian2 =  new Olympian(longer[i].getName(),longer[i].getSex(),longer[i].getAge());
+
+            teams[i] = new Team(Olympian1, Olympian2, omission, omission);
         }
         for (int i = S; i < n/2; i++){
             int other = i + n/2 - S;
-            teams[i].setOlympian1(
-                    Olympian(longer[i].getName(),longer[i].getSex(),longer[i].getAge()));
-            teams[i].setOlympian2(
-                    Olympian(longer[other].getName(),longer[other].getSex(),longer[other].getAge()));
-            teams[i].setWins(omission);
-            teams[i].setLosses(omission);
+            Olympian Olympian1 =  new Olympian(longer[i].getName(),longer[i].getSex(),longer[i].getAge());
+            Olympian Olympian2 =  new Olympian(longer[other].getName(),longer[other].getSex(),longer[other].getAge());
+
+            teams[i] = new Team(Olympian1, Olympian2, omission, omission);
         }
     }
 }

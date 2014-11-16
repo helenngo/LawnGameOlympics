@@ -71,9 +71,9 @@
         public static void getTeams() {
             System.out.println("The teams are:\n");
             TeamManager TeamManager = new TeamManager();
-            for (int i = 0; i < TeamManager.teams.length(); i++) {
+            for (int i = 0; i < TeamManager.teams.length; i++) {
                 Team person = TeamManager.teams[i];
-                System.out.println(person.getOlympian1() + ", " + person.getOlympian2() + ", " + person.getLosses() + "," +
+                System.out.println(person.getOlympian1().getName() + ", " + person.getOlympian2().getName() + ", " + person.getLosses() + "," +
                         person.getWins()+"\n");
             }
             System.out.println("\n");
