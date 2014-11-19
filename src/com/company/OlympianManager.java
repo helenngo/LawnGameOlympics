@@ -22,23 +22,29 @@ public class OlympianManager {
         String olympianLine;
         list = new ArrayList<Olympian>();
         try {
+            //reads the text file
             BufferedReader br = new BufferedReader(new FileReader("//Users//Helen//GitHub//Test//Olympian.lgoo"));
 
+            //reads file line by line
             while ((olympianLine = br.readLine()) != null) {
 
+                //splits string into array
                 String[] olympian = olympianLine.split(",");
+                //assigns a name for each element of the array
                 name = olympian[0];
                 String sex = olympian[1];
                 String age = olympian[2];
+                //casts the string sex into enum sex
                 if (sex.equals("MALE")) {
                     gender = Sex.MALE;
                 } else {
                     gender = Sex.FEMALE;
                 }
+                //cats string age to int
                 year = Integer.parseInt(age);
-
+                //creates a new Olympian
                 Olympian = new Olympian(name, gender, year);
-
+                //adds the Olympian to array list
                 list.add(Olympian);
             }
 
@@ -46,7 +52,9 @@ public class OlympianManager {
 
         catch (FileNotFoundException fnfe) {
             System.out.println("File Not Found");
-        } catch (IOException ioe) {
+        }
+
+        catch (IOException ioe) {
             System.out.println("Problem reading from file");
         }
     }

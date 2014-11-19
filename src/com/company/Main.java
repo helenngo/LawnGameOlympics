@@ -6,6 +6,10 @@
 
     public class Main {
 
+        private static CompetitionManager Cats = new CompetitionManager();
+        private static TeamManager TeamManager = new TeamManager();
+        private static OlympianManager OlympianManager = new OlympianManager();
+
         //A method to create and initialize the events array, olympian matrix and help screen.
         public static void main(String[] args) {
 
@@ -29,7 +33,9 @@
                         helpMethod();
                     }else if (userInput.equals("t") || userInput.equals("teams")) {
                         getTeams();
-                    }else if(userInput.equals("q") || userInput.equals("quit")){
+                    }else if(userInput.equals("sc")){
+                        startCompetition();
+                    }else if(userInput.equals("q") || userInput.equals("quit")) {
                         System.out.println("Bye.");
                         System.exit(0);
                     } else {
@@ -60,7 +66,6 @@
         //A method to display the day's olympians.
         public static void getOlympian() {
             System.out.println("The olympians are:\n");
-            OlympianManager OlympianManager = new OlympianManager();
             for (int i = 0; i < OlympianManager.list.size(); i++) {
                 Olympian person = OlympianManager.list.get(i);
                 System.out.println(person.getName() + ", " + person.getSex() + ", " + person.getAge() + "\n");
@@ -68,15 +73,33 @@
             System.out.println("\n");
         }
 
+        //A method to display the day's teams.
         public static void getTeams() {
             System.out.println("The teams are:\n");
-            TeamManager TeamManager = new TeamManager();
             for (int i = 0; i < TeamManager.teams.length; i++) {
                 Team person = TeamManager.teams[i];
                 System.out.println(person.getOlympian1().getName() + ", " + person.getOlympian2().getName() + ", " + person.getLosses() + "," +
                         person.getWins()+"\n");
             }
             System.out.println("\n");
+        }
+
+        //A method to select choices for competitions.
+        public static void startCompetition() {
+            System.out.println("Enter the desired event for your new competition.");
+            int event = Integer.parseInt(br.readLine());
+            System.out.println("Enter the the desired first team.");
+            String team1 = br.readLine();
+            System.out.println("Enter the the desired second team.");
+            String team2 = br.readLine();
+            Cats.GetCompetions()[event].getEvent();
+        }
+
+        public static void endCompetition() {
+            System.out.print("Enter the ended competition.");
+            int competition = Integer.parseInt(br.readLine());
+            System.out.println("Enter the winning team.");
+            String winningTeam = br.readLine();
         }
 
         //A method to display the help screen.
