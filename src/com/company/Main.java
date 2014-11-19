@@ -6,9 +6,10 @@
 
     public class Main {
 
-        private static CompetitionManager Cats = new CompetitionManager();
+        private static CompetitionManager CompetitionManager = new CompetitionManager();
         private static TeamManager TeamManager = new TeamManager();
         private static OlympianManager OlympianManager = new OlympianManager();
+        static BufferedReader br;
 
         //A method to create and initialize the events array, olympian matrix and help screen.
         public static void main(String[] args) {
@@ -21,7 +22,7 @@
             System.out.println("\t h for additional help.");//A bit of instructions
 
             try {
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                br = new BufferedReader(new InputStreamReader(System.in));
                 String userInput = br.readLine(); //returns user input as string
 
                 while ((userInput = br.readLine()) != null) {
@@ -86,20 +87,43 @@
 
         //A method to select choices for competitions.
         public static void startCompetition() {
-            System.out.println("Enter the desired event for your new competition.");
-            int event = Integer.parseInt(br.readLine());
-            System.out.println("Enter the the desired first team.");
-            String team1 = br.readLine();
-            System.out.println("Enter the the desired second team.");
-            String team2 = br.readLine();
-            Cats.GetCompetions()[event].getEvent();
+            try {
+                System.out.println("Enter the desired event for your new competition.");
+                int event = Integer.parseInt(br.readLine());
+                System.out.println("Enter the the desired first team.");
+                int team1 = Integer.parseInt(br.readLine());
+                System.out.println("Enter the the desired second team.");
+                int team2 = Integer.parseInt(br.readLine());
+
+
+            } catch (IOException ioe) {
+                System.out.println("Problem reading from file");
+            }
         }
 
+        //A method to display the current events.
+        public static void getCompetitions() {
+            System.out.println("The ongoing events are:\n");
+            for (int i = 0; i < CompetitionManager.getCompetitions().length; i++) {
+                ICompetition match = CompetitionManager.getCompetitions()[i];
+                System.out.println("Playing" + match.getEvent()
+                        + "are Team " + match.getTeam1().getOlympian1().getName() + "&" + match.getTeam1().getOlympian2().getName()
+                        + "and Team" + match.getTeam2().getOlympian1().getName() + "&" + match.getTeam2().getOlympian2().getName());
+            }
+            System.out.println("\n");
+        }
+
+        //A method to select competition to end.
         public static void endCompetition() {
-            System.out.print("Enter the ended competition.");
-            int competition = Integer.parseInt(br.readLine());
-            System.out.println("Enter the winning team.");
-            String winningTeam = br.readLine();
+            try{
+                System.out.print("Enter the ended competition.");
+                int competition = Integer.parseInt(br.readLine());
+                System.out.println("Enter the winning team.");
+                int winningTeam = Integer.parseInt(br.readLine());
+            }
+            catch (IOException ioe) {
+                System.out.println("Problem reading from file");
+            }
         }
 
         //A method to display the help screen.

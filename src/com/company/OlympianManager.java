@@ -47,7 +47,6 @@ public class OlympianManager {
                 //adds the Olympian to array list
                 list.add(Olympian);
             }
-
         }
 
         catch (FileNotFoundException fnfe) {

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Helen on 11/13/14.
@@ -45,7 +47,6 @@ public class CompetitionManager {
         } catch (IOException ioe) {
             System.out.println("Problem reading from file");
         }
-    }
 */
     //adds a new competition to the linked list
     public void startCompetition() {
@@ -58,15 +59,24 @@ public class CompetitionManager {
         tail = select;
     }
 
-    public ICompetition[]GetCompetions(){
-        ICompetition[] ICompetition = new ICompetition[1];
-        ICompetition[0]= new Competition(null,null,null);
-        return ICompetition;
+    //constructs an array from linked list
+    public ICompetition[]getCompetitions(){
+        ArrayList myArray = new ArrayList();
+        for(Competition curr = head; curr != null; curr = curr.next){
+            myArray.add(curr);
+        }
+        return (ICompetition[])myArray.toArray();
     }
 
     //removes a competition from the linked list
-    public void endCompetition(){
-
+    public void endCompetition(ICompetition competition, Team winningTeam){
+        Competition select = new Competition(event, team1, team2);
+        for (Competition curr = head; curr == competition; curr = curr.next){
+            curr.prev.next = curr.next;
+            curr.next.prev = curr.prev;
+            curr.next = null;
+            curr.next = null;
+        }
     }
 
 }
