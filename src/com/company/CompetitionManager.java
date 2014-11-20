@@ -37,7 +37,7 @@ public class CompetitionManager {
                 if(curr.prev != null || curr.next != null){
                     curr.prev.next = curr.next;
                     curr.next.prev = curr.prev;
-                }else if (curr.prev == null || curr.next == null){
+                }else if (curr.prev == null && curr.next == null){
                     head = null;
                     tail = null;
                 }else if(curr.prev == null){
