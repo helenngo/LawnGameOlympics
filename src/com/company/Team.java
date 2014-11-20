@@ -10,11 +10,11 @@ public class Team {
     private int wins;
     private int losses;
 
-    public Team (Olympian olympian1, Olympian olympian2, int wins, int loses ){
+    public Team (Olympian olympian1, Olympian olympian2, int wins, int losses ){
         this.olympian1 = olympian1;
         this.olympian2 = olympian2;
         this.wins = wins;
-        this.losses = loses;
+        this.losses = losses;
     }
 
     public void setOlympian1(Olympian olympian1){

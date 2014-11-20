@@ -1,14 +1,18 @@
     package com.company;
 
+    import com.sun.media.sound.InvalidFormatException;
+
     import java.io.BufferedReader;
     import java.io.InputStreamReader;
     import java.io.IOException;
+    import java.util.ArrayList;
 
     public class Main {
 
         private static CompetitionManager CompetitionManager = new CompetitionManager();
         private static TeamManager TeamManager = new TeamManager();
         private static OlympianManager OlympianManager = new OlympianManager();
+        private static EventManager EventManager = new EventManager();
         static BufferedReader br;
 
         //A method to create and initialize the events array, olympian matrix and help screen.
@@ -27,15 +31,19 @@
 
                 while ((userInput = br.readLine()) != null) {
                     if (userInput.equals("e") || userInput.equals("events")) {
-                        eventMethod();
+                        getEvents();
                     } else if (userInput.equals("o") || userInput.equals("olympians")) {
                         getOlympian();
                     } else if (userInput.equals("h") || userInput.equals("help")) {
                         helpMethod();
                     }else if (userInput.equals("t") || userInput.equals("teams")) {
                         getTeams();
-                    }else if(userInput.equals("sc")){
+                    }else if(userInput.equals("c") || userInput.equals("competitions")){
+                        getCompetitions();
+                    }else if(userInput.equals("sc") || userInput.equals("start competition")){
                         startCompetition();
+                    }else if(userInput.equals("ec") || userInput.equals("end competition")){
+                        endCompetition();
                     }else if(userInput.equals("q") || userInput.equals("quit")) {
                         System.out.println("Bye.");
                         System.exit(0);
@@ -52,9 +60,8 @@
         }
 
         //A method to display the day's events.
-        public static void eventMethod() {
+        public static void getEvents() {
             System.out.println("The events are:");
-            EventManager EventManager = new EventManager();
             for (int i = 0; i < EventManager.eventsArray.length; i++) {
                 System.out.println(EventManager.eventsArray[i].getName());
                 System.out.println(EventManager.eventsArray[i].getPlayTo());
@@ -79,36 +86,60 @@
             System.out.println("The teams are:\n");
             for (int i = 0; i < TeamManager.teams.length; i++) {
                 Team person = TeamManager.teams[i];
-                System.out.println(person.getOlympian1().getName() + ", " + person.getOlympian2().getName() + ", " + person.getLosses() + "," +
-                        person.getWins()+"\n");
+                System.out.println(i + " " + person.getOlympian1().getName() + " & " + person.getOlympian2().getName());
+                System.out.println("Wins:" + person.getWins() + ", Losses" + person.getLosses()+"\n");
             }
             System.out.println("\n");
         }
 
         //A method to select choices for competitions.
-        public static void startCompetition() {
+        public static void startCompetition(){
             try {
                 System.out.println("Enter the desired event for your new competition.");
-                int event = Integer.parseInt(br.readLine());
-                System.out.println("Enter the the desired first team.");
-                int team1 = Integer.parseInt(br.readLine());
-                System.out.println("Enter the the desired second team.");
-                int team2 = Integer.parseInt(br.readLine());
+                for (int i = 0; i < EventManager.eventsArray.length; i++) {
+                    System.out.println(i + " " +EventManager.eventsArray[i].getName());
+                }
+                int e = Integer.parseInt(br.readLine());
 
+                System.out.println("The teams are:\n");
+                for (int i = 0; i < TeamManager.teams.length; i++) {
+                    Team person = TeamManager.teams[i];
+                    System.out.println(i + " " + person.getOlympian1().getName() + " & " + person.getOlympian2().getName());}
+                System.out.println("Enter the the desired first team.");
+                int t1 = Integer.parseInt(br.readLine());
+                System.out.println("Enter the the desired second team.");
+                int t2 = Integer.parseInt(br.readLine());
+
+                while (t1 == t2){
+                    System.out.println("Don't be silly, a team can't play against themselves.");
+                    System.out.println("Choose another team.");
+                    t2 = Integer.parseInt(br.readLine());
+                }
+
+                CompetitionManager.event = EventManager.eventsArray[e];
+                CompetitionManager.team1 = TeamManager.teams[t1];
+                CompetitionManager.team2 = TeamManager.teams[t2];
+
+                CompetitionManager.startCompetition();
 
             } catch (IOException ioe) {
-                System.out.println("Problem reading from file");
+                System.out.println("Don't be silly.");
+            }catch (NumberFormatException nfe) {
+                System.out.println("The events and teams are defined by their index numbers.");
+            }catch (ArrayIndexOutOfBoundsException aiobe){
+                System.out.println("You've chosen an invalid event or team.");
             }
         }
 
         //A method to display the current events.
         public static void getCompetitions() {
-            System.out.println("The ongoing events are:\n");
+            System.out.println("The ongoing competitions are:\n");
             for (int i = 0; i < CompetitionManager.getCompetitions().length; i++) {
                 ICompetition match = CompetitionManager.getCompetitions()[i];
-                System.out.println("Playing" + match.getEvent()
-                        + "are Team " + match.getTeam1().getOlympian1().getName() + "&" + match.getTeam1().getOlympian2().getName()
-                        + "and Team" + match.getTeam2().getOlympian1().getName() + "&" + match.getTeam2().getOlympian2().getName());
+                System.out.println("Playing " + match.getEvent().getName()
+                        + " are:");
+                System.out.println("Team " + match.getTeam1().getOlympian1().getName() + " & " + match.getTeam1().getOlympian2().getName() + " and");
+                System.out.println("Team " + match.getTeam2().getOlympian1().getName() + " & " + match.getTeam2().getOlympian2().getName() + "\n" );
             }
             System.out.println("\n");
         }
@@ -116,14 +147,23 @@
         //A method to select competition to end.
         public static void endCompetition() {
             try{
-                System.out.print("Enter the ended competition.");
-                int competition = Integer.parseInt(br.readLine());
+                System.out.println("Enter the ended competition.");
+                int c = Integer.parseInt(br.readLine());
                 System.out.println("Enter the winning team.");
-                int winningTeam = Integer.parseInt(br.readLine());
+                int w = Integer.parseInt(br.readLine());
+
+                ICompetition competition = CompetitionManager.getCompetitions()[c];
+                Team winningTeam = TeamManager.teams[w];
+
+                CompetitionManager.endCompetition(competition, winningTeam);
             }
             catch (IOException ioe) {
-                System.out.println("Problem reading from file");
+                System.out.println("Incorrect input.");
             }
+            catch (NumberFormatException nfe){
+                System.out.println("The competitions and teams are defined by their index numbers.");
+            }
+            System.out.println("\n");
         }
 
         //A method to display the help screen.

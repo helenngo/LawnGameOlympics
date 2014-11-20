@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class CompetitionManager {
 
+    private static TeamManager TeamManager = new TeamManager();
     private Competition head;
     private Competition tail;
     Event event;
@@ -59,24 +60,35 @@ public class CompetitionManager {
         tail = select;
     }
 
+    //removes a competition from the linked list
+    public void endCompetition(ICompetition competition, Team winningTeam) {
+        for (Competition curr = head; curr.next != null; curr = curr.next) {
+            if(curr == competition) {
+                curr.prev = curr;
+                curr = curr.next;
+            }
+        }
+
+        int team1Wins = team1.getWins();
+        int team1Losses = team1.getLosses();
+        int team2Wins = team2.getWins();
+        int team2Losses = team2.getLosses();
+
+        if (team1 == winningTeam){
+            team1.setWins(team1Wins++);
+            team2.setLosses(team2Losses++);
+        }else{
+            team1.setLosses(team1Losses++);
+            team2.setWins(team2Wins++);
+        }
+    }
+
     //constructs an array from linked list
     public ICompetition[]getCompetitions(){
         ArrayList myArray = new ArrayList();
         for(Competition curr = head; curr != null; curr = curr.next){
             myArray.add(curr);
         }
-        return (ICompetition[])myArray.toArray();
+        return (ICompetition[])myArray.toArray( new ICompetition[myArray.size()]);
     }
-
-    //removes a competition from the linked list
-    public void endCompetition(ICompetition competition, Team winningTeam){
-        Competition select = new Competition(event, team1, team2);
-        for (Competition curr = head; curr == competition; curr = curr.next){
-            curr.prev.next = curr.next;
-            curr.next.prev = curr.prev;
-            curr.next = null;
-            curr.next = null;
-        }
-    }
-
 }
