@@ -20,9 +20,12 @@
 
             System.out.println("Lawn Game Olympics");//The title of the application.
             System.out.println("Press enter once, then input");//A bit of instructions.
-            System.out.println("\t e for today's events");//A bit of instructions
-            System.out.println("\t o for the competing olympians");//A bit of instructions
-            System.out.println("\t t for the teams, and");//A bit of instructions
+            System.out.println("\t e for today's events,");//A bit of instructions
+            System.out.println("\t o for the competing olympians,");//A bit of instructions
+            System.out.println("\t t for the teams,");//A bit of instructions
+            System.out.println("\t c for the competitions,");//A bit of instructions
+            System.out.println("\t sc for start competition,");//A bit of instructions
+            System.out.println("\t ec for end competition, and");//A bit of instructions
             System.out.println("\t h for additional help.");//A bit of instructions
 
             try {
@@ -104,7 +107,8 @@
                 System.out.println("The teams are:\n");
                 for (int i = 0; i < TeamManager.teams.length; i++) {
                     Team person = TeamManager.teams[i];
-                    System.out.println(i + " " + person.getOlympian1().getName() + " & " + person.getOlympian2().getName());}
+                    System.out.println(i + " " + person.getOlympian1().getName() + " & " + person.getOlympian2().getName());
+                }
                 System.out.println("Enter the the desired first team.");
                 int t1 = Integer.parseInt(br.readLine());
                 System.out.println("Enter the the desired second team.");
@@ -136,7 +140,7 @@
             System.out.println("The ongoing competitions are:\n");
             for (int i = 0; i < CompetitionManager.getCompetitions().length; i++) {
                 ICompetition match = CompetitionManager.getCompetitions()[i];
-                System.out.println("Playing " + match.getEvent().getName()
+                System.out.println(i + " Playing " + match.getEvent().getName()
                         + " are:");
                 System.out.println("Team " + match.getTeam1().getOlympian1().getName() + " & " + match.getTeam1().getOlympian2().getName() + " and");
                 System.out.println("Team " + match.getTeam2().getOlympian1().getName() + " & " + match.getTeam2().getOlympian2().getName() + "\n" );
@@ -147,8 +151,14 @@
         //A method to select competition to end.
         public static void endCompetition() {
             try{
+                getCompetitions();
                 System.out.println("Enter the ended competition.");
                 int c = Integer.parseInt(br.readLine());
+                System.out.println("The teams are:\n");
+                for (int i = 0; i < TeamManager.teams.length; i++) {
+                    Team person = TeamManager.teams[i];
+                    System.out.println(i + " " + person.getOlympian1().getName() + " & " + person.getOlympian2().getName());
+                }
                 System.out.println("Enter the winning team.");
                 int w = Integer.parseInt(br.readLine());
 

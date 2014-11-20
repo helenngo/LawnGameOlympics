@@ -64,8 +64,20 @@ public class CompetitionManager {
     public void endCompetition(ICompetition competition, Team winningTeam) {
         for (Competition curr = head; curr.next != null; curr = curr.next) {
             if(curr == competition) {
-                curr.prev = curr;
-                curr = curr.next;
+                if(curr.prev != null || curr.next != null){
+                    curr.prev.next = curr.next;
+                    curr.next.prev = curr.prev;
+                }else if (curr.prev == null || curr.next == null){
+                    head = null;
+                    tail = null;
+                }else if(curr.prev == null){
+                    head = curr.next;
+                    curr.next.prev = head;
+                }else if (curr.next == null){
+                    tail = curr.prev;
+                    curr.prev.next = tail;
+                }
+                break;
             }
         }
 
