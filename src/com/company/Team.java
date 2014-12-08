@@ -48,4 +48,12 @@ public class Team {
     public int getLosses(){
         return this.losses;
     }
+
+    public void indicateWin(){
+        this.wins++;
+    }
+
+    public void indicateLosses(){
+        this.losses++;
+    }
 }

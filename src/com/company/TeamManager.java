@@ -16,11 +16,10 @@ public class TeamManager {
     private Olympian[] Roster;
     public Team[] teams;
 
-    public TeamManager() {
+    public TeamManager(OlympianManager OM) {
 
-        OlympianManager OlympianManager = new OlympianManager();
         //Turn array list of Olympian to an array
-        Roster = OlympianManager.list.toArray(new Olympian[OlympianManager.list.size()]);
+        Roster = OM.list.toArray(new Olympian[OM.list.size()]);
         //The number of total Olympians
         int players = Roster.length;
 

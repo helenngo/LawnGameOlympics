@@ -18,12 +18,12 @@ public class OlympianManager {
     Sex gender;
     int year;
 
-    public OlympianManager() {
+    public OlympianManager(String filePath) {
         String olympianLine;
         list = new ArrayList<Olympian>();
         try {
             //reads the text file
-            BufferedReader br = new BufferedReader(new FileReader("//Users//Helen//GitHub//Test//Olympian.lgoo"));
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
 
             //reads file line by line
             while ((olympianLine = br.readLine()) != null) {
