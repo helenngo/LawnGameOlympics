@@ -1,13 +1,22 @@
 package com.company;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by Helen on 10/6/14.
  */
-public class EventManager {
+public class EventManager{
 
     Event[] eventsArray = new Event[6];
 
-    public EventManager() {
+    public EventManager(TeamManager TM) {
+
+        for(int i = 0; i < TM.getTeams().length; i++){
+            Team team = TM.getTeams()[i];
+            Team team1 = new Team(team.getOlympian1(),team.getOlympian2(),team.getWins(),team.getLosses());
+
+        }
 
         CanJamEvent CanJam = new CanJamEvent();
         CanJam.setName("Cam Jam");
@@ -64,4 +73,10 @@ public class EventManager {
 
         eventsArray[5] = Washoos;
     }
+
+    public Event[] getEvents()
+    {
+        return eventsArray;
+    }
+
 }

@@ -57,5 +57,10 @@ public class OlympianManager {
             System.out.println("Problem reading from file");
         }
     }
+
+    public List<Olympian> getOlympians()
+    {
+        return list;
+    }
 }
 

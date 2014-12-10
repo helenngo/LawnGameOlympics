@@ -9,6 +9,8 @@ public class Team {
     private Olympian olympian2;
     private int wins;
     private int losses;
+    protected Team next;
+    protected Team prev;
 
     public Team (Olympian olympian1, Olympian olympian2, int wins, int losses ){
         this.olympian1 = olympian1;

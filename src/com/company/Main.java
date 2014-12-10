@@ -8,10 +8,10 @@
 
     public class Main {
 
-        private static CompetitionManager CM;
         private static OlympianManager OM;
         private static TeamManager TM;
         private static EventManager EM;
+        private static CompetitionManager CM;
         static BufferedReader br;
         static String filePath;
 
@@ -20,11 +20,11 @@
 
             filePath = args[0];
 
-            CM = new CompetitionManager();
+
             OM = new OlympianManager(filePath);
             TM = new TeamManager(OM);
-            EM = new EventManager();
-
+            EM = new EventManager(TM);
+            CM = new CompetitionManager();
 
             System.out.println("Lawn Game Olympics");//The title of the application.
             System.out.println("Please remember input a file into configurations.");//The title of the application.
@@ -74,11 +74,11 @@
         //A method to display the day's events.
         public static void getEvents() {
             System.out.println("The events are:");
-            for (int i = 0; i < EM.eventsArray.length; i++) {
-                System.out.println(EM.eventsArray[i].getName());
-                System.out.println(EM.eventsArray[i].getPlayTo());
-                System.out.println(EM.eventsArray[i].getIsPlaytoExact());
-                System.out.println(EM.eventsArray[i].getPlayDistance());
+            for (int i = 0; i < EM.getEvents().length; i++) {
+                System.out.println(EM.getEvents()[i].getName());
+                System.out.println(EM.getEvents()[i].getPlayTo());
+                System.out.println(EM.getEvents()[i].getIsPlaytoExact());
+                System.out.println(EM.getEvents()[i].getPlayDistance());
             }
             System.out.println("\n");
         }
@@ -86,8 +86,8 @@
         //A method to display the day's olympians.
         public static void getOlympian() {
             System.out.println("The olympians are:\n");
-            for (int i = 0; i < OM.list.size(); i++) {
-                Olympian person = OM.list.get(i);
+            for (int i = 0; i < OM.getOlympians().size(); i++) {
+                Olympian person = OM.getOlympians().get(i);
                 System.out.println(person.getName() + ", " + person.getSex() + ", " + person.getAge() + "\n");
             }
             System.out.println("\n");
@@ -96,8 +96,8 @@
         //A method to display the day's teams.
         public static void getTeams() {
             System.out.println("The teams are:\n");
-            for (int i = 0; i < TM.teams.length; i++) {
-                Team person = TM.teams[i];
+            for (int i = 0; i < TM.getTeams().length; i++) {
+                Team person = TM.getTeams()[i];
                 System.out.println(i + " " + person.getOlympian1().getName() + " & " + person.getOlympian2().getName());
                 System.out.println("Wins:" + person.getWins() + ", Losses" + person.getLosses()+"\n");
             }
@@ -108,14 +108,14 @@
         public static void startCompetition(){
             try {
                 System.out.println("Enter the desired event for your new competition.");
-                for (int i = 0; i < EM.eventsArray.length; i++) {
-                    System.out.println(i + " " +EM.eventsArray[i].getName());
+                for (int i = 0; i < EM.getEvents().length; i++) {
+                    System.out.println(i + " " +EM.getEvents()[i].getName());
                 }
                 int e = Integer.parseInt(br.readLine());
 
                 System.out.println("The teams are:\n");
-                for (int i = 0; i < TM.teams.length; i++) {
-                    Team person = TM.teams[i];
+                for (int i = 0; i < TM.getTeams().length; i++) {
+                    Team person = TM.getTeams()[i];
                     System.out.println(i + " " + person.getOlympian1().getName() + " & " + person.getOlympian2().getName());
                 }
                 System.out.println("Enter the the desired first team.");
@@ -129,7 +129,7 @@
                     t2 = Integer.parseInt(br.readLine());
                 }
 
-                CM.startCompetition(EM.eventsArray[e], TM.teams[t1], TM.teams[t2]);
+                CM.startCompetition(EM.getEvents()[e], TM.getTeams()[t1], TM.getTeams()[t2]);
 
             } catch (IOException ioe) {
                 System.out.println("Don't be silly.");
@@ -150,7 +150,6 @@
                 System.out.println("Team " + match.getTeam1().getOlympian1().getName() + " & " + match.getTeam1().getOlympian2().getName() + " and");
                 System.out.println("Team " + match.getTeam2().getOlympian1().getName() + " & " + match.getTeam2().getOlympian2().getName() + "\n" );
             }
-            System.out.println("\n");
         }
 
         //A method to select competition to end.
@@ -160,15 +159,15 @@
                 System.out.println("Enter the ended competition.");
                 int c = Integer.parseInt(br.readLine());
                 System.out.println("The teams are:\n");
-                for (int i = 0; i < TM.teams.length; i++) {
-                    Team person = TM.teams[i];
+                for (int i = 0; i < TM.getTeams().length; i++) {
+                    Team person = TM.getTeams()[i];
                     System.out.println(i + " " + person.getOlympian1().getName() + " & " + person.getOlympian2().getName());
                 }
                 System.out.println("Enter the winning team.");
                 int w = Integer.parseInt(br.readLine());
 
                 ICompetition competition = CM.getCompetitions()[c];
-                Team winningTeam = TM.teams[w];
+                Team winningTeam = TM.getTeams()[w];
 
                 CM.endCompetition(competition, winningTeam);
             }

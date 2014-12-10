@@ -15,7 +15,6 @@ public class CompetitionManager {
     private Competition head;
     private Competition tail;
 
-
     //adds a new competition to the linked list
     public void startCompetition(Event event, Team team1, Team team2) {
         Competition select = new Competition(event, team1, team2);

@@ -71,4 +71,9 @@ public class TeamManager {
             teams[i] = new Team(Olympian1, Olympian2, omission, omission);
         }
     }
+
+    public Team[] getTeams()
+    {
+        return teams;
+    }
 }
