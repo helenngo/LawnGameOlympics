@@ -8,8 +8,7 @@ public class BracketQueue {
     private Team last;
 
     //adds a new team to the queue
-    public void enqueue(Olympian olympian1, Olympian olympian2, int wins, int losses) {
-            Team newTeam = new Team(olympian1, olympian2, wins, losses);
+    public void enqueue(Team newTeam) {
             if (last != null) {
                 last.next = newTeam;
             }

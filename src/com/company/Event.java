@@ -56,8 +56,7 @@ public abstract class Event {
 
     void startQueue(Team[] tempTeam) {
         for (int j = 0; j < tempTeam.length; j++) {
-            BracketQueue BQ = new BracketQueue();
-            BQ.enqueue(tempTeam[j].getOlympian1(), tempTeam[j].getOlympian2(), tempTeam[j].getWins(), tempTeam[j].getLosses());
+            BQ.enqueue(tempTeam[j]);
         }
     }
 
@@ -100,12 +99,12 @@ public abstract class Event {
     }
 
     void ReturnTeams(Team winner, Team loser){
-        PS.push(loser.getOlympian1(),loser.getOlympian2(),loser.getWins(),loser.getLosses());
+        PS.push(loser);
 
         if(!BQ.isEmpty()){
-            BQ.enqueue(winner.getOlympian1(),winner.getOlympian2(),winner.getWins(),winner.getLosses());
+            BQ.enqueue(winner);
         }else{
-            PS.push(winner.getOlympian1(),winner.getOlympian2(),winner.getWins(),winner.getLosses());
+            PS.push(winner);
         }
     }
 }

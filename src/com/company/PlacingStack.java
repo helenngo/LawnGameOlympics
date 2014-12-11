@@ -7,8 +7,7 @@ public class PlacingStack {
 
     private Team head;
 
-    void push(Olympian olympian1, Olympian olympian2, int wins, int losses){
-        Team listTeam = new Team(olympian1, olympian2, wins, losses);
+    void push(Team listTeam){
         listTeam.next = head;
         head = listTeam;
     }
