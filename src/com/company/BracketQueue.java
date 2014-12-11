@@ -31,4 +31,13 @@ public class BracketQueue {
         }
         return currTeam;
     }
+
+    Team[]PeekNextTeams(){
+        Team[] peek = new Team[2];
+        if(isEmpty() == false){
+            peek[0] = last;
+            peek[1] = last.prev;
+        }
+        return (peek);
+    }
 }

@@ -6,12 +6,20 @@ package com.company;
 public class PlacingStack {
 
     private Team head;
-    private Team listTeam;
 
     void push(Olympian olympian1, Olympian olympian2, int wins, int losses){
-        Team Loser = new Team(olympian1, olympian2, wins, losses);
+        Team listTeam = new Team(olympian1, olympian2, wins, losses);
         listTeam.next = head;
         head = listTeam;
+    }
+
+    Team pop() throws Exception{
+        if(head == null){
+            throw new Exception("Nothing to pop.");
+        }
+        Team listTeam = head;
+        head = listTeam.next;
+        return listTeam;
     }
 }
 

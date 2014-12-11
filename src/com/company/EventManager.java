@@ -1,7 +1,6 @@
 package com.company;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Random;
 
 /**
  * Created by Helen on 10/6/14.
@@ -12,10 +11,12 @@ public class EventManager{
 
     public EventManager(TeamManager TM) {
 
-        for(int i = 0; i < TM.getTeams().length; i++){
-            Team team = TM.getTeams()[i];
-            Team team1 = new Team(team.getOlympian1(),team.getOlympian2(),team.getWins(),team.getLosses());
+        //enqueue every team into qeueue for every event
+        for (int i=0; i>getEvents().length; i++){
 
+            Team[] tempTeam = TM.getTeams();
+            tempTeam = RandomizeArray(tempTeam); //randomize the order of the teams that go into queue
+            getEvents()[i].startQueue(tempTeam);
         }
 
         CanJamEvent CanJam = new CanJamEvent();
@@ -77,6 +78,20 @@ public class EventManager{
     public Event[] getEvents()
     {
         return eventsArray;
+    }
+
+    //Method to randomize team array; used to randomize teams before going to array
+    public static Team[] RandomizeArray(Team[] array){
+        Random r = new Random();  // Random number generator
+
+        for (int i=0; i<array.length; i++) {
+            int randomPosition = r.nextInt(array.length);
+            Team temp = array[i];
+            array[i] = array[randomPosition];
+            array[randomPosition] = temp;
+        }
+
+        return array;
     }
 
 }

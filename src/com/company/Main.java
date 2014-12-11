@@ -1,7 +1,5 @@
     package com.company;
 
-    import com.sun.media.sound.InvalidFormatException;
-
     import java.io.BufferedReader;
     import java.io.InputStreamReader;
     import java.io.IOException;
@@ -29,13 +27,13 @@
             System.out.println("Lawn Game Olympics");//The title of the application.
             System.out.println("Please remember input a file into configurations.");//The title of the application.
             System.out.println("Press enter once, then input");//A bit of instructions.
-            System.out.println("\t e for today's events,");//A bit of instructions
-            System.out.println("\t o for the competing olympians,");//A bit of instructions
-            System.out.println("\t t for the teams,");//A bit of instructions
-            System.out.println("\t c for the competitions,");//A bit of instructions
-            System.out.println("\t sc for start competition,");//A bit of instructions
-            System.out.println("\t ec for end competition, and");//A bit of instructions
-            System.out.println("\t h for additional help.");//A bit of instructions
+            System.out.println("\t e for today's events,");
+            System.out.println("\t o for the competing olympians,");
+            System.out.println("\t t for the teams,");
+            System.out.println("\t c for the competitions,");
+            System.out.println("\t sc for start competition,");
+            System.out.println("\t ec for end competition, and");
+            System.out.println("\t h for additional help.");
 
             try {
                 br = new BufferedReader(new InputStreamReader(System.in));
@@ -52,8 +50,6 @@
                         getTeams();
                     }else if(userInput.equals("c") || userInput.equals("competitions")){
                         getCompetitions();
-                    }else if(userInput.equals("sc") || userInput.equals("start competition")){
-                        startCompetition();
                     }else if(userInput.equals("ec") || userInput.equals("end competition")){
                         endCompetition();
                     }else if(userInput.equals("q") || userInput.equals("quit")) {
@@ -76,11 +72,17 @@
             System.out.println("The events are:");
             for (int i = 0; i < EM.getEvents().length; i++) {
                 System.out.println(EM.getEvents()[i].getName());
-                System.out.println(EM.getEvents()[i].getPlayTo());
-                System.out.println(EM.getEvents()[i].getIsPlaytoExact());
-                System.out.println(EM.getEvents()[i].getPlayDistance());
+                //If the event is over, the top three teams are returned in order
+                if(EM.getEvents()[i].isEmpty()){
+                    EM.getEvents()[i].ReturnPlacing();
+                }else{
+                    System.out.println("*");
+                }
+                System.out.print("Play to:" + EM.getEvents()[i].getPlayTo());
+                System.out.print(", " + EM.getEvents()[i].getIsPlaytoExact());
+                System.out.print(", & " +EM.getEvents()[i].getPlayDistance());
+                System.out.println("* The event is still ongoing; no placing to display.\n");
             }
-            System.out.println("\n");
         }
 
         //A method to display the day's olympians.
@@ -104,44 +106,9 @@
             System.out.println("\n");
         }
 
-        //A method to select choices for competitions.
-        public static void startCompetition(){
-            try {
-                System.out.println("Enter the desired event for your new competition.");
-                for (int i = 0; i < EM.getEvents().length; i++) {
-                    System.out.println(i + " " +EM.getEvents()[i].getName());
-                }
-                int e = Integer.parseInt(br.readLine());
-
-                System.out.println("The teams are:\n");
-                for (int i = 0; i < TM.getTeams().length; i++) {
-                    Team person = TM.getTeams()[i];
-                    System.out.println(i + " " + person.getOlympian1().getName() + " & " + person.getOlympian2().getName());
-                }
-                System.out.println("Enter the the desired first team.");
-                int t1 = Integer.parseInt(br.readLine());
-                System.out.println("Enter the the desired second team.");
-                int t2 = Integer.parseInt(br.readLine());
-
-                while (t1 == t2){
-                    System.out.println("Don't be silly, a team can't play against themselves.");
-                    System.out.println("Choose another team.");
-                    t2 = Integer.parseInt(br.readLine());
-                }
-
-                CM.startCompetition(EM.getEvents()[e], TM.getTeams()[t1], TM.getTeams()[t2]);
-
-            } catch (IOException ioe) {
-                System.out.println("Don't be silly.");
-            }catch (NumberFormatException nfe) {
-                System.out.println("The events and teams are defined by their index numbers.");
-            }catch (ArrayIndexOutOfBoundsException aiobe){
-                System.out.println("You've chosen an invalid event or team.");
-            }
-        }
-
         //A method to display the current events.
         public static void getCompetitions() {
+            helloWorld(); //starts initial competitions and sees if there are any more competitions that can be started
             System.out.println("The ongoing competitions are:\n");
             for (int i = 0; i < CM.getCompetitions().length; i++) {
                 ICompetition match = CM.getCompetitions()[i];
@@ -166,10 +133,10 @@
                 System.out.println("Enter the winning team.");
                 int w = Integer.parseInt(br.readLine());
 
-                ICompetition competition = CM.getCompetitions()[c];
-                Team winningTeam = TM.getTeams()[w];
-
-                CM.endCompetition(competition, winningTeam);
+                //passes the competition and the winning team into endCompetition in Competition Manager
+                CM.endCompetition(CM.getCompetitions()[c], TM.getTeams()[w]);
+                //checks to see of there are any new competitions that can be started
+                helloWorld();
             }
             catch (IOException ioe) {
                 System.out.println("Incorrect input.");
@@ -190,5 +157,39 @@
             System.out.println("And if you still don't know what to do," +
                     "\nI'm sorry but I can't help you anymore.");
             System.out.println("\n");
+        }
+
+        /*If method that starts a competition by checking to see if an event is in a competition, and if the two upcoming teams for that event is in
+        * a competition. If none of the above is in a competition then the a competition is started with the event, and the two teams.*/
+        public static void helloWorld() {
+            for (int i = 0; i < EM.getEvents().length; i++) { //checks through every Event
+                for (int j = 0; j < CM.getCompetitions().length; j++) { //check through every Competition
+                    ICompetition[] curr = CM.getCompetitions();
+                    if (EM.getEvents()[i] == curr[j].getEvent()) { //if the event is in an Competition
+                        i++; //go to the next Event
+                    //if the event is not in Competition, and it is the last element of Competition => the event is not in Competition
+                    } else if (EM.getEvents()[i] != curr[j].getEvent() && curr[j] == curr[curr.length]) {
+                        //checks if the next team is in Competition
+                        for (int k = 0; k == CM.getCompetitions().length; k++) {
+                            ICompetition[] cur = CM.getCompetitions();
+                            if (EM.getEvents()[i].PeekNextTeams()[0] == cur[k].getTeam1() || EM.getEvents()[i].PeekNextTeams()[0] == cur[k].getTeam2()) {
+                                i++;
+                            } else if (EM.getEvents()[i].PeekNextTeams()[0] != cur[k].getTeam1() || EM.getEvents()[i].PeekNextTeams()[0] != cur[k].getTeam2() && cur[k] == cur[curr.length]) {
+                                //checks if the next-next team is in Competition
+                                for (int l = 0; l == CM.getCompetitions().length; l++) {
+                                    ICompetition[] cu = CM.getCompetitions();
+                                    if (EM.getEvents()[i].PeekNextTeams()[1] == cu[l].getTeam1() || EM.getEvents()[i].PeekNextTeams()[1] == cu[l].getTeam2()) {
+                                        i++;
+                                    //if the next-next team is also not in Competition
+                                    } else if (EM.getEvents()[i].PeekNextTeams()[1] != cur[l].getTeam1() || EM.getEvents()[i].PeekNextTeams()[1] != cur[l].getTeam2() && cu[l] == cu[curr.length]) {
+                                        //start a new competition with the event that is not in Competition, and the two next teams.
+                                        CM.startCompetition(EM.getEvents()[i], EM.getEvents()[i].GetNextTeams()[0], EM.getEvents()[i].GetNextTeams()[1]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }

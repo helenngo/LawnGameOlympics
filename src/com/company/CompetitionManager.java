@@ -1,5 +1,7 @@
 package com.company;
 
+import sun.jvm.hotspot.HelloWorld;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -48,12 +50,16 @@ public class CompetitionManager {
             }
         }
 
+        //indicates the winning and the losing teams, then passes those teams into event so that they can enqueued and stacked accordingly
         if (competition.getTeam1() == winningTeam){
             competition.getTeam1().indicateWin();
             competition.getTeam2().indicateLosses();
+            competition.getEvent().ReturnTeams(competition.getTeam1(),competition.getTeam2());
+
         }else{
             competition.getTeam2().indicateWin();
             competition.getTeam1().indicateLosses();
+            competition.getEvent().ReturnTeams(competition.getTeam2(),competition.getTeam1());
         }
     }
 
